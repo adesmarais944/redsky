@@ -16,8 +16,16 @@ class UserAdmin(admin.ModelAdmin):
     fields = ["username"]
     inlines = [ProfileInline]
 
+# Adds Custom Register Admin
+class ProfileAdmin(admin.ModelAdmin):
+    model = Profile
+    list_display= ['id','user','date_modified']
+
 # Unregister initial User
 admin.site.unregister(User)
 
 # Reregister User and Profile
 admin.site.register(User, UserAdmin)
+
+# Register Profile
+admin.site.register(Profile, ProfileAdmin)
