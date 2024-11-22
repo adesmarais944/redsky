@@ -1,12 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Chirps</h1>
-
-    {% for chirp in chirps %}
-        <div class="alert alert-dark" role="alert">
-            {{ chirp }}
-        </div>
-        </br></br>
-    {% endfor %}
-
+<div class="container text-center">
+	<div class="row">
+		<div class="col-8">
+			<h1>Chirps</h1>
+			</br>
+			{% for chirp in chirps %}
+			    <div class="alert alert-dark" role="alert">
+				    {{ chirp.body }}</br>
+                    <small class="text-muted">
+                        {{ chirp.created_at }} by @{{ chirp.user.username }}
+                    </small>
+			    </div>
+			    </br></br>
+			{% endfor %}
+		</div>
+		<div class="col-4">
+			</br></br></br></br>
+			{% if form %}
+			<form method="POST">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit" class="btn btn-secondary">Post Chirp</button>
+			</form>
+			{% endif %}
+		</div>
 {% endblock %}

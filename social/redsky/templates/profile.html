@@ -9,7 +9,10 @@
                 {% if chirps %}
                     {% for chirp in chirps %}
                     <div class="alert alert-dark" role="alert">
-                        {{ chirp }}
+                        {{ chirp.body }}</br>
+                        <small class="text-muted">
+                            {{ chirp.created_at }} by @{{ chirp.user.username }}
+                        </small>
                     </div>
                     </br></br>
                     {% endfor %}
