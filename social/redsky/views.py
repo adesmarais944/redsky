@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Profile
+from .models import Profile, Chirp
 
-# Create your views here.
 def home(request):
-    return render(request, 'home.html', {})
+    if request.user.is_authenticated:
+        chirps = Chirp.objects.all().order_by("-created_at")
+    return render(request, 'home.html', {"chirps":chirps})
 
 def profile_list(request):
     if request.user.is_authenticated:
@@ -17,6 +18,7 @@ def profile_list(request):
 def profile(request, pk):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user_id=pk)
+        chirps = Chirp.objects.filter(user_id=pk).order_by("-created_at")
         # POST form logic
         if request.method == "POST":
             # Get current user
@@ -30,7 +32,7 @@ def profile(request, pk):
                 current_user_profile.follows.add(profile)
             current_user_profile.save()
 
-        return render(request, 'profile.html', {"profile":profile})
+        return render(request, 'profile.html', {"profile":profile, "chirps":chirps})
     else:
         messages.success(request, ('You must be logged in to view this page.'))
         return redirect('home')
