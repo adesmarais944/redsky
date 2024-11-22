@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Profile, Chirp
-from .forms import ChirpForm
+from .forms import ChirpForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 def home(request):
     if request.user.is_authenticated:
@@ -69,3 +71,21 @@ def logout_user(request):
     logout(request)
     messages.success(request, ('You have been logged out.'))
     return redirect('home')
+
+def register_user(request):
+    form = SignUpForm()
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            #first_name = form.cleaned_data['first_name']
+            #last_name = form.cleaned_data['last_name']
+            #email = form.cleaned_data['email']
+            # Login user
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ('You have successfully registered.'))
+            return redirect('home')
+    return render(request, 'register.html', {"form":form})
