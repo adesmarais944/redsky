@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Profile, Chirp
 from .forms import ChirpForm, SignUpForm, ProfilePicForm
@@ -105,6 +105,18 @@ def update_user(request):
             messages.success(request, ('Your profile has been updated.'))
             return redirect('home')
         return render(request, 'update_user.html', {"user_form":user_form, "profile_form":profile_form})
+    else:
+        messages.success(request, ('You must be logged in to view this page.'))
+        return redirect('home')
+    
+def chirp_like(request, pk):
+    if request.user.is_authenticated:
+        chirp = get_object_or_404(Chirp, id=pk)
+        if chirp.likes.filter(id=request.user.id):
+            chirp.likes.remove(request.user)
+        else:
+            chirp.likes.add(request.user)
+        return redirect('home')
     else:
         messages.success(request, ('You must be logged in to view this page.'))
         return redirect('home')
