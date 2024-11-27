@@ -24,6 +24,16 @@
 							<small class="text-muted">
 							({{ chirp.created_at}}) By 
 							@{{ chirp.user.username }}
+							{{ chirp.number_of_likes }}
+							{% if user in chirp.likes.all %} - Likes - 
+								<a href="{% url 'chirp_like' chirp.id %}">
+									<i class="fa fa-heart" style="color:white"></i>
+								</a>
+							{% else %}
+								<a href="{% url 'chirp_like' chirp.id %}">
+									<i class="fa fa-heart-o" style="color:white"></i>
+								</a>
+							{% endif %}
 							</small>
 						</div>
 						<br/><br/>

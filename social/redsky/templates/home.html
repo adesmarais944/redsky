@@ -24,9 +24,12 @@
 							@{{ chirp.user.username }}
 							{{ chirp.number_of_likes }}
 								{% if user in chirp.likes.all %} - Likes - 
-									<a href="{% url 'chirp_like' chirp.id %}">Unlike</a>
+									<a href="{% url 'chirp_like' chirp.id %}">
+										<i class="fa fa-heart" style="color:white"></i></a>
 								{% else %}
-									<a href="{% url 'chirp_like' chirp.id %}">Like</a>
+									<a href="{% url 'chirp_like' chirp.id %}">
+										<i class="fa fa-heart-o" style="color:white"></i>
+									</a>
 								{% endif %}
 
 							</small>

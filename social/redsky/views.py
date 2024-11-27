@@ -116,7 +116,7 @@ def chirp_like(request, pk):
             chirp.likes.remove(request.user)
         else:
             chirp.likes.add(request.user)
-        return redirect('home')
+        return redirect(request.META.get('HTTP_REFERER'))
     else:
         messages.success(request, ('You must be logged in to view this page.'))
         return redirect('home')
