@@ -10,4 +10,5 @@ urlpatterns = [
     path('register/', views.register_user, name = 'register'),
     path('update_user/', views.update_user, name = 'update_user'),
     path('chirp_like/<int:pk>', views.chirp_like, name='chirp_like'),
+    path('chirp_show/<int:pk>', views.chirp_show, name='chirp_show'),
 ]

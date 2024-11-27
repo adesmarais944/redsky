@@ -120,3 +120,10 @@ def chirp_like(request, pk):
     else:
         messages.success(request, ('You must be logged in to view this page.'))
         return redirect('home')
+    
+def chirp_show(request, pk):
+    chirp = get_object_or_404(Chirp, id=pk)
+    if chirp:
+        return render(request, 'chirp_show.html', {"chirp":chirp})
+    else:
+        messages.success(request, ('This chirp does not exist.'))

@@ -4,9 +4,7 @@
 <div class="container text-center">
 	<div class="row">
 		<div class="col-8">
-			<h1>Chirps</h1>
 			</br>
-			{% for chirp in chirps %}
 			<div class="alert alert-dark" role="alert">
 				<div class="container">
 					<div class="row">
@@ -21,26 +19,22 @@
 							{{ chirp.body }}<br/>
 							<small class="text-muted">
 							({{ chirp.created_at}}) By 
-							@{{ chirp.user.username }}&nbsp;&nbsp;
+							@{{ chirp.user.username }}
 							{{ chirp.number_of_likes }}
-								{% if user in chirp.likes.all %}
+								{% if user in chirp.likes.all %} - Likes - 
 									<a href="{% url 'chirp_like' chirp.id %}">
 										<i class="fa fa-heart" style="color:white"></i></a>
 								{% else %}
 									<a href="{% url 'chirp_like' chirp.id %}">
 										<i class="fa fa-heart-o" style="color:white"></i></a>
 								{% endif %}
-								&nbsp;
-									<a href="{% url 'chirp_show' chirp.id %}">
-										<i class="fa fa-share" style="color:gray"></i></a>
-									</a>
+
 							</small>
 						</div>
 						<br/><br/>
 					</div>
 				</div>
 			</div>
-			{% endfor %}
 		</div>
 		<div class="col-4">
 			</br></br></br></br>
